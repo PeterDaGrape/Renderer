@@ -5,3 +5,4 @@
 #include "globals.h"
 
 Point vertexWorldToScreen(Window* window, Camera* camera, Vec3* vertex);
+bool inBounds(Point p, int width, int height);

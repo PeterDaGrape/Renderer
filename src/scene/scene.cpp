@@ -38,7 +38,7 @@ int Scene::loadMeshes(string pathname) {
 
         string line;
 
-        vector<Normal> normals;
+        vector<Vec3> normals;
 
         while (getline(file, line)) {
             cout << line << endl;
@@ -48,7 +48,7 @@ int Scene::loadMeshes(string pathname) {
                 cout << "creating object called: " << objectName << endl;
 
                 if (objects.size() > 0) {
-                    cout << "Incrementing offset " << endl; 
+                    //cout << "Incrementing offset " << endl; 
                     vertOffset += objects.at(objects.size() - 1).getVertices().size();
                 }
 
@@ -66,7 +66,7 @@ int Scene::loadMeshes(string pathname) {
                 float x, y, z;
 
                 iss >> x >> y >> z;
-                cout << "x: " << x << " y: " << y << " z: " << z << endl ;
+                //cout << "x: " << x << " y: " << y << " z: " << z << endl ;
 
                 Vec3 v;
                 v.x = x;
@@ -82,7 +82,7 @@ int Scene::loadMeshes(string pathname) {
                 std::array<float, 3> values{};
                 std::istringstream iss(data);
 
-                Normal n;
+                Vec3 n;
                 iss >> n.x >> n.y >> n.z;
                 cout << "x: " << n.x << " y: " << n.y << " z: " << n.z << endl ;
 
@@ -125,7 +125,7 @@ int Scene::loadMeshes(string pathname) {
 
 
                     face.setNormal(normals.at(normalID - 1));
-                    cout << "trying to access vert: " << vertexID - vertOffset - 1 << " with offset: " << vertOffset << endl;
+
                     face.addVertex(objects.back().getVertexPtr(vertexID - vertOffset - 1));
 
                 }

@@ -5,12 +5,21 @@
 using namespace std;
 
 
-Face::Face(Normal n) {
+Face::Face(Vec3 n) {
     normal = n;
 }
 
 Face::Face() {
     
+}
+
+Vec3 Face::calculateMidpoint() {
+    Vec3 midpoint;
+    for (Vec3* v : vertices) {
+        midpoint = *v + midpoint;
+    }
+    midpoint = midpoint / vertices.size();
+    return midpoint;
 }
 
 void Face::addVertex(Vec3* v_ptr) {
@@ -26,7 +35,7 @@ vector<Vec3> Face::getVertices() {
 }
 
 
-void Face::setNormal(Normal n) {
+void Face::setNormal(Vec3 n) {
     this -> normal = n;
 }
 

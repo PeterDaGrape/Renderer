@@ -11,6 +11,7 @@ class Camera {
 
     public:
     Camera(Vec3 location, float fov);
+    void move(Vec3 vector) {location = vector + location;}
     void setLocation(Vec3 location);
     Vec3 getLocation();
 

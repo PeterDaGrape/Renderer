@@ -3,23 +3,21 @@
 #include <string>
 #include <vector>
 
-struct Normal {
-    float x;
-    float y;
-    float z; 
-};
+
 
 class Face {
     private:
     
     std::vector<Vec3*> vertices;
-    Normal normal;
+    Vec3 normal;
 
     public:
-    Face(Normal n);
+    Face(Vec3 n);
     Face();
-    void setNormal(Normal n);
+    void setNormal(Vec3 n);
+    Vec3 getNormal() {return normal; }
     void addVertex(Vec3* v_ptr);
+    Vec3 calculateMidpoint();
 
     std::vector<Vec3> getVertices();
 };
