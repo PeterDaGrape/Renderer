@@ -12,11 +12,6 @@ Window::Window(int width, int height) {
     this -> width = width;
     this -> height = height;
     SDL_Init(SDL_INIT_VIDEO);
-
-    if(!screen) {
-        cerr << "Could not create window" << endl;
-    }
-    
 }
 
 

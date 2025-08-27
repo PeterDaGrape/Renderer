@@ -4,7 +4,11 @@ project(Renderer)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 set(CMAKE_OSX_ARCHITECTURES "arm64")
 set(CMAKE_CXX_STANDARD 17)
+
+# packages used
 find_package(SDL2 REQUIRED)
+set(GSL_ROOT_DIR "/opt/homebrew/opt/gsl")
+find_package(GSL REQUIRED)
 
 
 
@@ -24,25 +28,24 @@ add_executable(Renderer
     ${SOURCES}
 )
 
-add_executable(Tests 
-    tests/test_maths.cpp
-    external/catch_amalgamated.cpp
-    ${SOURCES}
-)
+#add_executable(Tests tests/test_maths.cpp external/catch_amalgamated.cpp ${SOURCES})
 
 set_target_properties(Renderer PROPERTIES
     BUILD_WITH_INSTALL_RPATH TRUE
     INSTALL_RPATH "@loader_path/../Frameworks;/Library/Frameworks"
 )
 
-set_target_properties(Tests PROPERTIES
-    BUILD_WITH_INSTALL_RPATH TRUE
-    INSTALL_RPATH "@loader_path/../Frameworks;/Library/Frameworks"
-)
+
+#set_target_properties(Tests PROPERTIES
+#    BUILD_WITH_INSTALL_RPATH TRUE
+#    INSTALL_RPATH "@loader_path/../Frameworks;/Library/Frameworks"
+#)
+
 
 set(PROJECT_INCLUDE_DIRS
     "${CMAKE_CURRENT_BINARY_DIR}"
     "${SDL2_INCLUDE_DIRS}"
+    "${GSL_INCLUDE_DIRS}"
     "${CMAKE_SOURCE_DIR}/external"
     "${CMAKE_SOURCE_DIR}/external/metal-cpp"
     "${INCLUDE_DIR}"
@@ -57,20 +60,21 @@ target_include_directories(
     ${PROJECT_INCLUDE_DIRS}
 )
 
-target_include_directories(
-    Tests 
-    PRIVATE 
-    ${PROJECT_INCLUDE_DIRS})
+#target_include_directories(
+#    Tests 
+#    PRIVATE 
+#    ${PROJECT_INCLUDE_DIRS})
 
 
-target_link_libraries(
-    Tests
-    PRIVATE "${SDL2_LIBRARIES}" 
-)
+#target_link_libraries(
+#    Tests
+#    PRIVATE "${SDL2_LIBRARIES}" 
+#)
 
 target_link_libraries(
     Renderer
     PRIVATE "${SDL2_LIBRARIES}" 
+    PRIVATE "${GSL_LIBRARIES}"
     MetalCPP 
     "-framework Metal" 
     "-framework QuartzCore" 
