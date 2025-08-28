@@ -41,7 +41,7 @@ int Scene::loadMeshes(string pathname) {
         vector<Vec3> normals;
 
         while (getline(file, line)) {
-            cout << line << endl;
+            //cout << line << endl;
             if (line[0] == 'o') {
                 //Line describes an object
                 string objectName = line.substr(2, line.length());
@@ -84,7 +84,7 @@ int Scene::loadMeshes(string pathname) {
 
                 Vec3 n;
                 iss >> n.x >> n.y >> n.z;
-                cout << "x: " << n.x << " y: " << n.y << " z: " << n.z << endl ;
+                //cout << "x: " << n.x << " y: " << n.y << " z: " << n.z << endl ;
 
                 normals.push_back(n);
 
@@ -106,7 +106,7 @@ int Scene::loadMeshes(string pathname) {
                 istringstream iss(data);
                 string s;
                 while (getline(iss, s, ' ') ) {
-                    cout << s << endl;
+                    //cout << s << endl;
 
                     //s is in form 2/13/6
                     istringstream slashString(s);

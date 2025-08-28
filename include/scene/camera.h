@@ -40,6 +40,8 @@ class Camera {
 
 
     void setRotation(Vec3 rotation) {this -> rotation = rotation;}
+    void lookAbout(int x, int y);
+    
     Vec3 getRotation() {return rotation;}
 
     //returns the direction vector of the camera

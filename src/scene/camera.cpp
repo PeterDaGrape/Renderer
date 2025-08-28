@@ -35,6 +35,15 @@ void Camera::calculate4x4ProjMat(int width, int height) {
     
 } 
 
+void Camera::lookAbout(int deltaX, int deltaY) {
+    float sensitivity = 0.005f; // tweak for mouse speed
+    rotation.y -= deltaX * sensitivity; // yaw
+    rotation.x += deltaY * sensitivity; // pitch
+    // Clamp pitch so camera doesn’t flip upside down
+    if (rotation.x > M_PI/2) rotation.x = M_PI/2;
+    if (rotation.x < -M_PI/2) rotation.x = -M_PI/2;
+}
+
 
 void Camera::move(Vec3 vector) {
 
