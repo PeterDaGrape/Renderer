@@ -5,7 +5,6 @@
 #include "globals.h"
 
 
-void applyRotationsToVector(Vec3* vector, Vec3* rotation);
 
 Point vertexWorldToScreen(Window* window, Camera* camera, Vec3* vertex);
 bool inBounds(Point p, int width, int height);

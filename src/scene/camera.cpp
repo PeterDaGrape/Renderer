@@ -13,19 +13,17 @@ Camera::Camera(Vec3 location, float fov, Vec3 rotation, int width, int height, f
     this -> location = location;
     this -> fov = fov;
     this -> rotation = rotation;
-    this -> projMat = gsl_matrix_alloc(4, 4);
     this -> zNear = zNear;
     this -> zFar = zFar;
 
-    calculateProjectionMat(width, height);
+    calculate4x4ProjMat(width, height);
+
 }
 
-gsl_matrix* Camera::calculateProjectionMat(int width, int height) {
-
-    
-    float fov_rads = this -> fov * (M_PI / 180.0f);
-
-
+void Camera::calculate4x4ProjMat(int width, int height) {
+  
+     float fov_rads = this -> fov * (M_PI / 180.0f);
+ 
     float coeffs[4][4] {
         {(float)height/ (float)width / tan(fov_rads/2), 0, 0, 0},
         {0, 1/tan(fov_rads/2), 0, 0},
@@ -33,14 +31,10 @@ gsl_matrix* Camera::calculateProjectionMat(int width, int height) {
         {0, 0, (-zFar * zNear) / (zFar - zNear), 0}
     };
 
+    memcpy(projectionMat, coeffs, sizeof(projectionMat));
     
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            gsl_matrix_set(projMat, j, i, coeffs[i][j]);
-        }
-    }
-    return projMat;
-}
+} 
+
 
 void Camera::move(Vec3 vector) {
 

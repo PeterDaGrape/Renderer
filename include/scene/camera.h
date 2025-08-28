@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "globals.h"
-#include <gsl/gsl_matrix.h>
 
 class Camera {
     private:
@@ -12,7 +11,7 @@ class Camera {
     float zNear;
     float zFar;
 
-    gsl_matrix* projMat;
+    float projectionMat[4][4];
 
 
     // is a vector describing the direction the camera points
@@ -24,10 +23,13 @@ class Camera {
     public:
     Camera(Vec3 location, float fov, Vec3 rotation, int width, int height, float zNear, float zFar);
 
-    gsl_matrix* getProjectionMatrix() {return projMat;}
 
-    // uses values
-    gsl_matrix* calculateProjectionMat(int width, int height);
+    float (&get4x4ProjMat())[4][4] { return projectionMat; }
+
+
+
+    void calculate4x4ProjMat(int width, int height); 
+
 
     void move(Vec3 vector);
     void setLocation(Vec3 location);

@@ -7,8 +7,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 # packages used
 find_package(SDL2 REQUIRED)
-set(GSL_ROOT_DIR "/opt/homebrew/opt/gsl")
-find_package(GSL REQUIRED)
 
 
 
@@ -45,7 +43,6 @@ set_target_properties(Renderer PROPERTIES
 set(PROJECT_INCLUDE_DIRS
     "${CMAKE_CURRENT_BINARY_DIR}"
     "${SDL2_INCLUDE_DIRS}"
-    "${GSL_INCLUDE_DIRS}"
     "${CMAKE_SOURCE_DIR}/external"
     "${CMAKE_SOURCE_DIR}/external/metal-cpp"
     "${INCLUDE_DIR}"
@@ -74,7 +71,6 @@ target_include_directories(
 target_link_libraries(
     Renderer
     PRIVATE "${SDL2_LIBRARIES}" 
-    PRIVATE "${GSL_LIBRARIES}"
     MetalCPP 
     "-framework Metal" 
     "-framework QuartzCore" 
