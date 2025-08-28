@@ -1,19 +1,26 @@
 #include "camera.h" 
 #include <math.h>
 #include <iostream>
+#include "engine/backend/cpu/transformations.h"
 
 using namespace std;
+
+
+
 
 
 Camera::Camera(Vec3 location, float fov, Vec3 rotation, int width, int height, float zNear, float zFar) {
     this -> location = location;
     this -> fov = fov;
     this -> rotation = rotation;
-    this -> mat = gsl_matrix_alloc(4, 4);
-    calculateProjectionMat(width, height, zNear, zFar);
+    this -> projMat = gsl_matrix_alloc(4, 4);
+    this -> zNear = zNear;
+    this -> zFar = zFar;
+
+    calculateProjectionMat(width, height);
 }
 
-gsl_matrix* Camera::calculateProjectionMat(int width, int height, float zNear, float zFar) {
+gsl_matrix* Camera::calculateProjectionMat(int width, int height) {
 
     
     float fov_rads = this -> fov * (M_PI / 180.0f);
@@ -29,14 +36,16 @@ gsl_matrix* Camera::calculateProjectionMat(int width, int height, float zNear, f
     
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            cout << coeffs[i][j] << endl;
-            gsl_matrix_set(mat, j, i, coeffs[i][j]);
+            gsl_matrix_set(projMat, j, i, coeffs[i][j]);
         }
     }
-    cout << "Calculated proj matrix!" << endl;
-    return mat;
+    return projMat;
 }
 
+void Camera::move(Vec3 vector) {
+
+    location = vector + location;
+}
 
 void Camera::setLocation(Vec3 location) {
     this -> location = location;
@@ -45,8 +54,6 @@ void Camera::setLocation(Vec3 location) {
 Vec3 Camera::getLocation() {
     return this -> location;
 }
-
-
 
 float Camera::getFOV() {
     return fov;

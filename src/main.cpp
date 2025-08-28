@@ -22,7 +22,7 @@ int main() {
     }
 
     //Look along the z+ axis
-    Camera camera(Vec3{0, 0, -8}, FOV, Vec3{0, 0, 0}, WIDTH, HEIGHT, 0.1, 10);
+    Camera camera(Vec3{0, 0, -8}, FOV, Vec3{0.5, 0, -0.2}, WIDTH, HEIGHT, 0.1, 100);
 
     scene->setCamera(&camera);
 

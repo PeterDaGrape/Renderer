@@ -12,7 +12,6 @@ CPUWireframe::CPUWireframe(int width, int height)
     
     SDL_Init(SDL_INIT_VIDEO);
 
-
     window -> setWindow(
         SDL_CreateWindow(
             "3D Renderer",
@@ -25,7 +24,8 @@ CPUWireframe::CPUWireframe(int width, int height)
     );
 
 
-    SDL_Renderer* renderer = SDL_CreateRenderer(window->getScreen(), -1, SDL_RENDERER_SOFTWARE);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window->getScreen(), -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
+
     window->setRenderer(renderer);
 
 
