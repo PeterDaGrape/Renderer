@@ -109,6 +109,7 @@ int Scene::loadMeshes(string pathname) {
                     //cout << s << endl;
 
                     //s is in form 2/13/6
+                    // can be in form 2//6 without texture coords
                     istringstream slashString(s);
                     
                     string v, t, n; 
@@ -118,7 +119,8 @@ int Scene::loadMeshes(string pathname) {
                     getline(slashString, n, '/');
 
                     int vertexID = stoi(v);
-                    int textureID = stoi(t); 
+                    // commented out until it's needed
+                    //int textureID = stoi(t); 
                     int normalID = stoi(n); 
 
                     //cout << "vID: " << vertexID << " tID: " << textureID << " normalID: " << normalID << endl;

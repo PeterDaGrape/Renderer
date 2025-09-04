@@ -26,7 +26,7 @@ class Camera {
 
     float (&get4x4ProjMat())[4][4] { return projectionMat; }
 
-
+    Vec3 getDirectionVector();
 
     void calculate4x4ProjMat(int width, int height); 
 
@@ -41,10 +41,12 @@ class Camera {
 
     void setRotation(Vec3 rotation) {this -> rotation = rotation;}
     void lookAbout(int x, int y);
-    
+
     Vec3 getRotation() {return rotation;}
 
     //returns the direction vector of the camera
 
+    void setFOV(float fov, int width, int height);
     float getFOV();
+    float* getFOVPtr() {return &fov;}
 };

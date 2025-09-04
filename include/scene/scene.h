@@ -23,7 +23,7 @@ class Scene {
     void setCamera(Camera* c);
     Camera* getCamera();
 
-    std::vector<Object> getObjects(){ return objects;}
+    const std::vector<Object>& getObjects() { return objects;}
 
     // Deleting the copy constructor to prevent copies
     Scene(const Scene& obj) = delete;

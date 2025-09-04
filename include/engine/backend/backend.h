@@ -1,21 +1,17 @@
 #pragma once
 #include <SDL.h>
-#include "engine/window.h"
 #include "scene/object.h"
 #include "scene/camera.h"
+#include "scene.h"
 
 class BackEnd {
 
 protected:
 
-    Window* window; 
-
-
 
 public:
     virtual ~BackEnd() = default;
-    virtual void drawFrame(Scene* scene) = 0;
-    virtual void drawObject(Camera* camera, Object object) = 0;
-    //virtual SDL_Renderer* init(SDL_Window* screen) = 0;
-
+    virtual void drawFrame(int width, int height, Scene* scene, SDL_Renderer* renderer) = 0;
+    virtual void drawObject(int width, int height, Camera* camera, const Object& object, SDL_Renderer* renderer) = 0;
+    
 };

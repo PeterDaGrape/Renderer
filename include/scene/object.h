@@ -15,11 +15,11 @@ class Face {
     Face(Vec3 n);
     Face();
     void setNormal(Vec3 n);
-    Vec3 getNormal() {return normal; }
+    const Vec3& getNormal() const {return normal; }
     void addVertex(Vec3* v_ptr);
-    Vec3 calculateMidpoint();
+    const Vec3 calculateMidpoint() const;
 
-    std::vector<Vec3> getVertices();
+    const std::vector<Vec3*>& getVertexPtrs() const {return vertices; }
 };
 
 class Object {
@@ -43,7 +43,7 @@ class Object {
     Vec3* getVertexPtr(int index);
 
     std::vector<Vec3> getVertices() {return vertices;}
-    std::vector<Face> getFaces() {return faces;}
+    const std::vector<Face>& getFaces() const {return faces;}
 
     Face getFace(int index);
 

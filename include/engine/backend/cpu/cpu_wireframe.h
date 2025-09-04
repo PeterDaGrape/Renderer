@@ -9,7 +9,7 @@ private:
 public:
 
     //SDL_Renderer* init(SDL_Window* screen);
-    CPUWireframe(int width, int height);
-    void drawFrame(Scene* scene);
-    void drawObject(Camera* camera, Object object);
+    CPUWireframe();
+    void drawFrame(int width, int height, Scene* scene, SDL_Renderer* renderer);
+    void drawObject(int width, int height, Camera* camera, const Object& object, SDL_Renderer* renderer);
 };

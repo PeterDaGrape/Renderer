@@ -6,82 +6,35 @@
 
 using namespace std;
 
-CPUWireframe::CPUWireframe(int width, int height)
+CPUWireframe::CPUWireframe()
 {
-    window = new Window(600, 480);
-    
-    SDL_Init(SDL_INIT_VIDEO);
-
-    window -> setWindow(
-        SDL_CreateWindow(
-            "3D Renderer",
-            SDL_WINDOWPOS_UNDEFINED,
-            SDL_WINDOWPOS_UNDEFINED,
-            width, 
-            height, 
-            SDL_WINDOW_ALLOW_HIGHDPI
-        )
-    );
-
-
-    SDL_Renderer* renderer = SDL_CreateRenderer(window->getScreen(), -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
-
-    window->setRenderer(renderer);
-
-
-    int renderWidth;
-    int renderHeight;
-    if (SDL_GetRendererOutputSize(renderer, &renderWidth, &renderHeight) != 0) {
-        cerr << "Could not get output size" << endl;
-    } else {
-        cout << "Width: " << renderWidth << " Height: " << renderHeight << endl;
-    }
-
-    window -> setWidth(renderWidth);
-    window -> setHeight(renderHeight);
-
+     
 }
 
-void CPUWireframe::drawFrame(Scene *scene)
-{
+void CPUWireframe::drawFrame(int width, int height, Scene* scene, SDL_Renderer* renderer) {
 
-    SDL_Renderer *renderer = window->getRenderer();
-
-    std::vector<Object> objects = scene->getObjects();
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    for (int i = 0; i < objects.size(); i++)
-    {
-
-        drawObject(scene->getCamera(), objects[i]);
+    for (const Object& object : scene -> getObjects()) {
+        drawObject(width, height, scene->getCamera(), object, renderer);
     }
 
-    SDL_RenderPresent(renderer);
-}
+ }
 
-void CPUWireframe::drawObject(Camera *camera, Object object)
-{
-
-    SDL_Renderer *renderer = window->getRenderer();
-
-    //cout << "Rendering object: " << object.getName() << endl;
+void CPUWireframe::drawObject(int width, int height, Camera* camera, const Object& object, SDL_Renderer* renderer) {
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
 
-    for (Face face : object.getFaces()) {
 
-        vector<Vec3> vertices = face.getVertices();
+    for (const Face& face : object.getFaces()) {
 
-        Vec3 temp = face.calculateMidpoint();
-        
-        //Point test = vertexWorldToScreen(window, camera, &temp);
-        //SDL_RenderDrawPoint(renderer, test.x, test.y);
-        
+        const vector<Vec3*>& vertices = face.getVertexPtrs();
+
         
         //backface culling
-        Vec3 faceVector = face.calculateMidpoint() - camera->getLocation();
+        Vec3 faceVector = *vertices.at(0) - camera->getLocation();
 
         Vec3 normal = face.getNormal();
 
@@ -91,15 +44,13 @@ void CPUWireframe::drawObject(Camera *camera, Object object)
 
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 
-
         Point prevPoint{-1, -1};
 
         for (int i = 0; i <= vertices.size(); i++) {
 
+            Point p = vertexWorldToScreen(width, height, camera, vertices[(i + 1) % vertices.size()]);
 
-            Point p = vertexWorldToScreen(window, camera, &vertices[(i + 1) % vertices.size()]);
-
-            if (inBounds(p, window->getWidth(), window->getHeight()) && inBounds(prevPoint, window->getWidth(), window->getHeight())){
+            if (inBounds(p, width, height) && inBounds(prevPoint, width, height)){
                 SDL_RenderDrawLine(renderer, p.x, p.y, prevPoint.x, prevPoint.y);
             }
 

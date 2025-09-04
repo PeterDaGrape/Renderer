@@ -13,7 +13,7 @@ Face::Face() {
     
 }
 
-Vec3 Face::calculateMidpoint() {
+const Vec3 Face::calculateMidpoint() const {
     Vec3 midpoint;
     for (Vec3* v : vertices) {
         midpoint = *v + midpoint;
@@ -26,13 +26,7 @@ void Face::addVertex(Vec3* v_ptr) {
     vertices.push_back(v_ptr);
 }
 
-vector<Vec3> Face::getVertices() {
-    vector<Vec3> returnVertices;
-    for (int i = 0; i < vertices.size(); i++) {
-        returnVertices.push_back(*vertices.at(i));
-    }
-    return returnVertices;
-}
+
 
 
 void Face::setNormal(Vec3 n) {

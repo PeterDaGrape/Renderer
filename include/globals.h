@@ -6,6 +6,8 @@
 #define HEIGHT 480
 #define MESH_PATH "../meshes/cube.obj"
 
+
+
 struct Point {
     int x;
     int y;
